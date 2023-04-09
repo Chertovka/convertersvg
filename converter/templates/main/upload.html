@@ -1,8 +1,22 @@
+{% extends "layout/basic.html" %}
+
+{% block content %}
+
+<section class="section-container py-10 min-h-1/2">
+    <div class="flex flex-col items-center">
+      <div class="py-3 bg-white w-full md:w-1/2 lg:w-1/2">
 <div class="w-3/4 md:w-1/2 flex justify-center mt-8 flex-column">
     <p>Загруженные файлы:</p>
     {% for uploaded_file_url in uploaded_file_urls%}
-    <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a>
+    <a href="/media/{{ uploaded_file_url }}">{{ uploaded_file_url }}</a>
     {% empty %}
-  <p>Нет загруженных файлов</p>
+<p>Нет загруженных файлов</p>
     {% endfor %}
     </div>
+    <p><a href="{% url 'index' %}">Вернутся на главную</a></p>
+{% endblock %}
+
+</div>
+</div>
+</section>
+

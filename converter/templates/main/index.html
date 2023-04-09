@@ -38,14 +38,6 @@
             Отправить
           </button>
         </div>
-        <div class="w-3/4 md:w-1/2 flex justify-center mt-8 flex-column">
-          <p>Загруженные файлы:</p>
-          {% for uploaded_file_url in uploaded_file_urls%}
-          <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a>
-          {% empty %}
-        <p>Нет загруженных файлов</p>
-          {% endfor %}
-          </div>
       </div>
     </section>  
 </form>
