@@ -1,0 +1,22 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Страница загрузки файла{% endblock %}</title>
+        {% bootstrap_css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+        {% bootstrap_javascript jquery='slim' %}
+        <script rel="preconnect" src="https://cdn.tailwindcss.com"></script>
+        <script src="https://kit.fontawesome.com/ffbd6d2f88.js" defer></script>
+    </head>
+    <body class="container-fluid">
+        {% bootstrap_messages %}
+        {% block content %}
+        {% endblock %}
+
+        <script src="{% static 'main/static.js' %}"></script>
+    </body>
+</html>

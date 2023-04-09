@@ -1,0 +1,52 @@
+{% extends "layout/basic.html" %}
+
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <section class="section-container py-10 min-h-1/2">
+      <div class="flex flex-col items-center">
+        <div class="py-3 bg-white w-full md:w-1/2 lg:w-1/2">
+          <h3 class="text-slate-800 text-lg text-center">
+            Конвертируйте свои файлы из G-code в SVG!
+          </h3>
+          {% for field in form %}
+          <section class="mt-5 px-3 flex gap-6">
+            <div class="flex-1 flex flex-col items-center p-3 border-2 border-dotted border-gray-300 rounded-lg drag-area">
+            <i class="fa-sharp fa-solid fa-cloud-arrow-up text-6xl text-violet-600"></i>
+              <header class="mt-6 flex items-center flex-column">
+                <span class="drag-file">Загрузите свои файлы или перетащите их сюда</span>
+                  <label class="input-file">
+                    {{field}}
+                     <span class="input-file-btn bg-violet-600 mt-2">Выберите файл</span>  
+                </label>
+              </header>
+              <p class="mt-12 text-gray-400 text-sm">
+                Только G-code, максимальный размер файла - 5MB
+              </p>
+            </div>
+          </section>
+          {% endfor %}
+          <p class="text-red-700 text-sm hidden" id="filetype-error">
+            Не подходящий тип файла
+          </p>
+          <p class="hidden text-xl text-red-600 text-center bg-pink-200 mt-6 p-3 rounded-lg" id="input-empty-error"></p>
+          <ul id="document-images" class="mt-6 px-3 bg-slate-100"></ul>
+        </div>
+        <div class="w-3/4 md:w-1/2 flex justify-center mt-8">
+          <button class="px-6 md:px-14 py-3 rounded-sm bg-violet-600 text-white document-next-button" type="submit">
+            Отправить
+          </button>
+        </div>
+        <div class="w-3/4 md:w-1/2 flex justify-center mt-8 flex-column">
+          <p>Загруженные файлы:</p>
+          {% for uploaded_file_url in uploaded_file_urls%}
+          <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a>
+          {% empty %}
+        <p>Нет загруженных файлов</p>
+          {% endfor %}
+          </div>
+      </div>
+    </section>  
+</form>
+{% endblock %}
