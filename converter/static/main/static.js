@@ -23,10 +23,10 @@ document.addEventListener("DOMContentLoaded", function() {
         emptyFields.push(key.toUpperCase());
       }
     }
-    
+
     errorMessage.textContent = 'Пожалуйста, выбрите минимум 1 файл';
     errorMessage.classList.remove("hidden");
-    
+
     setTimeout(function () {
       errorMessage.classList.add("hidden");
     }, 2000);
@@ -47,19 +47,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (deleteFileButton === null) return;
 
-    const index = documentFileObj["fileName"].find((x) => x === documentName);
+    const index = documentFileObj["fileName"].find(function (x) {
+      return x === documentName;
+    });
 
     documentFileObj["fileName"].splice(index, 1);
     documentsWrapper.removeChild(documentToDelete);
   });
 
-  function fileTypeLogo(fileType) {
-    if (fileType === "jpg" || fileType === "jpeg" || fileType === "png") return "text-violet-600 fa-image";
-
-    return "text-red-600 fa-file-pdf";
-  };
-
-  dropArea.addEventListener("dragover", (event) => {
+  dropArea.addEventListener("dragover", function (event) {
     event.preventDefault();
     dropArea.classList.add("active");
     dragFile.textContent = "Отпустите, чтобы загрузить файл";
@@ -70,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
     dragFile.textContent = "Перетащите файл для загрузки";
   });
 
-  dropArea.addEventListener("drop", (e) => {
+  dropArea.addEventListener("drop", function (e) {
     e.preventDefault();
 
     const target = e.dataTransfer;
@@ -80,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
     setttingFileValue(target);
   });
 
-  document.querySelector("body").addEventListener("click", (e) => {
+  document.querySelector("body").addEventListener("click", function (e) {
     const target = e.target;
     const nextButton = target.closest(".document-next-button");
     const sectionContainer = target.closest(".section-container");
@@ -111,17 +107,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     clear();
 
-    Array.from(files).forEach(file => {
+    Array.from(files).forEach(function (file) {
       const fileName = file.name;
       const fileSize = file.size;
-      const fileType = file.type.split("/").pop();
 
       let filetypeErrorMessage = document.getElementById("filetype-error");
       let sizeInMB = Number.parseFloat(fileSize / (1024 * 1024)).toFixed(2);
 
-      const fileTypes = ["application/pdf","image/png","image/jpg","image/jpeg"]
+      console.log({
+        file: fileName,
+        name: fileName.includes('.tap')
+      })
 
-      if (fileTypes.includes(file.type)) {
+      if (fileName.includes('.tap')) {
         filetypeErrorMessage.classList.add("hidden");
 
         let newDocument = document.createElement("li");
@@ -132,15 +130,14 @@ document.addEventListener("DOMContentLoaded", function() {
         );
 
         newDocument.innerHTML = `
-              <p class="whitespace-nowrap overflow-hidden text-ellipsis w-40"><i class="fa-solid text-xl mr-5 ${fileTypeLogo(
-                fileType
-              )}"></i> 
-                <span>${fileName}<span></p>
-                <p>${fileType}</p>
-                <p>${sizeInMB}mb</p>
-                <p>Загружен</p>
-                <button class="delete-document"><i class="fa-solid fa-trash"></i></button>
-              `;
+          <p class="whitespace-nowrap overflow-hidden text-ellipsis w-40">
+            <i class="fa-solid text-xl mr-5 text-violet-600 fa-image"></i> 
+            <span>${fileName}<span></p>
+            <p>tap</p>
+            <p>${sizeInMB} MB</p>
+            <p>Загружен</p>
+            <button class="delete-document"><i class="fa-solid fa-trash"></i></button>
+         `;
 
         documentImages.append(newDocument);
         documentFileObj["fileName"].push(fileName);

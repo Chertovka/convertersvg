@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import SvgFileForm
 from .models import SvgFile
-from django.http import HttpResponse
+from .toSvgConv import toSVGConv
 
 def index(request):
     if request.method == 'POST':
@@ -22,7 +22,7 @@ def index(request):
             'main/upload.html',
                 {
             'form': form,
-                'uploaded_file_urls': url_files,
+                'uploaded_file_urls': toSVGConv(url_files, 'media'),
                 },
     )
     else:
@@ -35,19 +35,3 @@ def index(request):
             'form': form
             },
     )
-
-def upload_file(request):
-    print('--->', request.FILES.getlist('file'))
-
-    if request.method == 'POST' and request.FILES.getlist('file'):
-        files = request.FILES.getlist('file')
-        url_files = []
-
-        for file in files:
-            url_files.append(file)
-
-        return render(request, 'main/upload.html', {
-        'uploaded_file_urls': url_files
-    })
-
-    return render(request, 'main/upload.html')
