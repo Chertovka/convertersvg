@@ -14,7 +14,6 @@ def toSVGConv(pathToGCodeFile, pathToSVG):
 
     for file in pathToGCodeFile:
         name = re.split(r'.tap', str(file))
-        print(name)
         link = f'{pathToSVG}/{name[0]}.svg'
         dwg = svgwrite.Drawing(f'{link}')
         new_path = 'media/' + str(file)
