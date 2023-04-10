@@ -18,9 +18,7 @@ def toSVGConv(pathToGCodeFile, pathToSVG):
         dwg = svgwrite.Drawing(f'{link}')
         new_path = 'media/' + str(file)
 
-        f = open(new_path)
-        f.read()
-        gcodeList = parseGcode(f)
+        gcodeList = parseGcode(new_path)
 
         withCom = False
         for i in gcodeList:
@@ -35,7 +33,6 @@ def toSVGConv(pathToGCodeFile, pathToSVG):
                 newCom = prevCom[:]
                 withCom = False
             if newCom in ["G00","G0"]:
-                print(i)
                 for k in i:
                     if k[0] == 'X':
                         prevCoord[0] = float(k[1:])
@@ -64,5 +61,4 @@ def toSVGConv(pathToGCodeFile, pathToSVG):
                     prevCom = i[0][:]
         dwg.save()
         files.append(link)
-        f.close()
     return files
