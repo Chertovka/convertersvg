@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .forms import SvgFileForm
 from .models import SvgFile
 from .toSvgConv import toSVGConv
+import os
 
 def index(request):
     if request.method == 'POST':
@@ -22,7 +23,7 @@ def index(request):
             'main/upload.html',
                 {
             'form': form,
-                'uploaded_file_urls': toSVGConv(url_files, 'media'),
+                'uploaded_file_urls': toSVGConv(url_files, '/home/c/cs24970/django_88799/public_html/convertersvg/media'),
                 },
     )
     else:

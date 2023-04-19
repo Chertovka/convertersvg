@@ -11,12 +11,13 @@ def toSVGConv(pathToGCodeFile, pathToSVG):
     z = 0
 
     files = []
+    linksSVG = []
 
     for file in pathToGCodeFile:
         name = re.split(r'.tap', str(file))
         link = f'{pathToSVG}/{name[0]}.svg'
         dwg = svgwrite.Drawing(f'{link}')
-        new_path = 'media/' + str(file)
+        new_path = f'{pathToSVG}/' + str(file)
 
         gcodeList = parseGcode(new_path)
 
@@ -61,4 +62,7 @@ def toSVGConv(pathToGCodeFile, pathToSVG):
                     prevCom = i[0][:]
         dwg.save()
         files.append(link)
-    return files
+        for k in files:
+        	k_f = '/'.join(k.split('/')[6:])
+            linksSVG.append(k_f)
+    return linksSVG
